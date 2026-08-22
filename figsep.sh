@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-nvm use v25.8.0 > /dev/null 2>&1 || nvm install v25.8.0 > /dev/null 2>&1
+nvm use v25.8.0 >/dev/null 2>&1 || nvm install v25.8.0 >/dev/null 2>&1
 
 args=("$@")
 
@@ -11,32 +11,32 @@ for s in "${args[@]}"; do
   res=$(npx oh-my-logo "${s}" --filled --block-font chrome)
 
   # ANSIエスケープコードを除去してから空行を削除
-  res=$(echo "$res" \
-    | tr -d '\r' \
-    | sed 's/\x1b\[[0-9;?]*[mGKHFJA-Za-z]//g' \
-    | sed '/^[[:space:]]*$/d')
+  res=$(echo "$res" |
+    tr -d '\r' |
+    sed 's/\x1b\[[0-9;?]*[mGKHFJA-Za-z]//g' |
+    sed '/^[[:space:]]*$/d')
 
   max=0
 
   while IFS= read -r line; do
     len=${#line}
-    if (( max < len )); then
+    if ((max < len)); then
       max=$len
     fi
-  done <<< "$res"
+  done <<<"$res"
 
-  border_width=$(( max + 5 ))
+  border_width=$((max + 5))
 
   printf '%.0s#' $(seq 1 $border_width)
   printf '\n'
 
   while IFS= read -r line; do
     len=${#line}
-    padding=$(( max - len + 1 ))
+    padding=$((max - len + 1))
     printf "# %s" "$line"
     printf '%.0s ' $(seq 1 $padding)
     printf " #\n"
-  done <<< "$res"
+  done <<<"$res"
 
   printf '%.0s#' $(seq 1 $border_width)
   printf '\n\n'
