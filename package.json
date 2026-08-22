@@ -1,0 +1,21 @@
+{
+  "name": "figsep",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "figsep": "./figsep.ts"
+  },
+  "scripts": {
+    "figsep": "bun run ./figsep.ts",
+    "typecheck": "bunx tsc --noEmit"
+  },
+  "dependencies": {
+    "cfonts": "^3.3.1",
+    "string-width": "^8.2.2"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.0",
+    "typescript": "^7.0.2"
+  }
+}
