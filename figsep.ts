@@ -5,7 +5,7 @@ import stringWidth from "string-width";
 
 type Style = "hash" | "slash" | "hyphen";
 
-const VERSION = "0.1.1";
+const VERSION = "0.2.0";
 
 const usage = `Usage: figsep [options] <label> [label ...]
 
@@ -68,7 +68,7 @@ for (let index = 0; index < args.length; index += 1) {
     const value = args[index + 1];
 
     if (value !== "hash" && value !== "slash" && value !== "hyphen") {
-      console.error("--style must be either 'hash' or 'slash'");
+      console.error("--style must be either 'hash' or 'slash' or 'hyphen'");
       process.exit(1);
     }
 
@@ -85,8 +85,8 @@ for (let index = 0; index < args.length; index += 1) {
   if (arg.startsWith("--style=")) {
     const value = arg.slice("--style=".length);
 
-    if (value !== "hash" && value !== "slash") {
-      console.error("--style must be either 'hash' or 'slash'");
+    if (value !== "hash" && value !== "slash" && value !== "hyphen") {
+      console.error("--style must be either 'hash' or 'slash' or 'hyphen'");
       process.exit(1);
     }
 
@@ -139,7 +139,7 @@ for (const label of labels) {
   };
 
   if (topBorder) {
-    console.log(border);
+    console.log(border());
   }
 
   for (const line of lines) {
@@ -152,15 +152,18 @@ for (const label of labels) {
     switch (style) {
       case "hash":
         console.log(`# ${line}`);
+        break;
       case "slash":
         console.log(`// ${line}`);
+        break;
       case "hyphen":
         console.log(`-- ${line}`);
+        break;
     }
   }
 
   if (bottomBorder) {
-    console.log(border);
+    console.log(border());
   }
 
   console.log();
